@@ -23,7 +23,7 @@ function browserMiddleware(req, res, next) {
 
     next();
 }
-// application.all('*', browserMiddleware)
+application.all('*', browserMiddleware)
 
 require('./controllers/levelsController')(application);
 
