@@ -1,0 +1,74 @@
+<html lang="en">
+
+<head>
+    <title>Bad Browser</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #111;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .typewriter span {
+            color: red;
+            display: none;
+            width: calc(.15rem + (1ch * var(--chars)));
+            overflow: hidden;
+            border-right: .15rem solid ;
+            white-space: nowrap;
+            font-family: monospace;
+            animation:
+                    typing 2s steps(var(--chars)),
+                    blink .5s step-end infinite alternate;
+        }
+
+        @keyframes typing { from { width: 0% } }
+        @keyframes blink  {	50%  { border-color: transparent } }
+
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="typewriter">
+        <span style="--chars: 90">
+            Our apologize but byteRunner can be access only via those browsers: Firefox, Opera, Safari
+        </span>
+    </div>
+</div>
+</body>
+
+<script>
+    const textes = document.querySelectorAll(".typewriter span")
+    let prevText = textes[textes.length-1]
+    let i = 0
+
+    animate(textes);
+    setTimeout(_=> animate(description), 3000);
+
+    function animate(x){
+        let index = (i++)%x.length
+
+        prevText.style.display = "none"
+        x[index].style.display = "block"
+
+        prevText = x[index]
+    }
+
+</script>
+
+</html>

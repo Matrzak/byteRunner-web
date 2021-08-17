@@ -1,0 +1,173 @@
+<html lang="en">
+
+    <head>
+        <title>byteRunner</title>
+        <script src="/static/jquery.js"></script>
+        <script src="/static/howler.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                background-color: #111;
+                color: #fff;
+                font-size: 1rem;
+            }
+
+            .container {
+                min-height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .btn {
+                background: green;
+                border: none;
+                color: #ffffff;
+                font-size: 20px;
+                padding: 10px 20px 10px 20px;
+                text-decoration: none;
+            }
+
+            .btn:hover {
+                background: #3cb0fd;
+                background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+                background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+                background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+                background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+                background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+                text-decoration: none;
+            }
+
+            .text{
+                color: green;
+                font-family: "Fira Code Retina", sans-serif;
+            }
+
+            .footer {
+                position: absolute;
+                bottom: 20%;
+                opacity: 0;
+                font-family: Arial;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div id="startsection">
+                <button class="btn" onclick="start()">START GAME</button>
+            </div>
+
+            <div class="text">
+            </div>
+
+            <div class="footer">
+                <h2>by Matrzak</h2>
+            </div>
+
+        </div>
+    </body>
+
+    <script>
+
+
+        function start() {
+            $("#startsection").remove()
+
+
+            const sound = new Howl({
+                src: '/static/keyboard.wav',
+                html5: true,
+                volume: 0.3
+            })
+
+            const bg = new Howl({
+                src: '/static/intro_bg.mp3',
+                html5: true,
+                volume: 0.5
+            })
+
+            const options = {
+                strings: [
+                    ' ',
+                    'May 18th \'17, 3 A.M',
+                    'United States Of America, Minnesota, Saint Paul',
+                    "Dear diary. </br></br>As a hacker I saw myriad times cruelty of our world." +
+                    " Situations that </br> push ordinary people to make evil things...</br>" +
+                    " To be freaking honest, I used to it. There will be always someone to </br> stab you in the back" +
+                    " even... here, online. Remember this fancy quote? </br></br></br> In order for the light to shine, the darkness must be present.</span>",
+                    "Why i wrote all this?",
+                    "Well...",
+                    "<span style='color: red'>I need to tell you something</span>.",
+                    "Some time ago i surfed through the 4chan as usually, reading some shitposts and all that stuff... you know how it works.",
+                    "And dont tell them. I am the...",
+                    "<span id='outro' style='color: red'>byteRunner</span>"
+
+                ],
+                typeSpeed: 70,
+                fadeOut: true,
+                cursorChar: '',
+                onStringTyped: (arrayPost, self) => {
+                    self.stop()
+                    setTimeout(_=> sound.stop(), 500)
+                    setTimeout(_=> {
+                        self.start();
+                        if(arrayPost === 5)
+                            setTimeout(_=> bg.play(), 800);
+
+                        if(arrayPost !== 9)
+                            setTimeout(_=> sound.play(), 500);
+
+                        if(arrayPost === 9)
+                            setTimeout(() => {
+                                $('#outro').animate({ fontSize: "110px" }, 4000)
+                                setTimeout(() => {
+                                    $('.footer').animate({ opacity: "1" }, 1500)
+                                })
+                            }, 1000);
+                    }, 3000);
+                }
+            };
+
+            let i = 0;
+            setInterval(() => {
+                i++;
+                console.log(i);
+            }, 1000)
+
+
+            const typed = new Typed('.text', options)
+            setTimeout(_=> sound.play(), 500)
+            setTimeout(() => {
+                typed.stop()
+                setTimeout(_=> sound.stop(), 500)
+                setTimeout(_=> {
+                    typed.start();
+                    setTimeout(_=> sound.play(), 500);
+                }, 3000);
+            }, 15100)
+
+            setTimeout(() => {
+                typed.stop()
+                setTimeout(_=> sound.stop(), 500)
+                setTimeout(_=> {
+                    typed.start();
+                    setTimeout(_=> sound.play(), 500);
+                }, 3000);
+            }, 29100)
+
+        }
+
+
+    </script>
+
+
+</html>
