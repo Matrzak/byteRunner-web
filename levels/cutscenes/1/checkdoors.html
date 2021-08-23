@@ -1,0 +1,119 @@
+<html lang="en">
+
+<head>
+    <title>byteRunner</title>
+    <script src="/static/jquery.js"></script>
+    <script src="/static/howler.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #111;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn {
+            background: green;
+            border: none;
+            color: #ffffff;
+            font-size: 20px;
+            padding: 10px 20px 10px 20px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #3cb0fd;
+            background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+            background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+            background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+            background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+            background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+            text-decoration: none;
+        }
+
+        .text{
+            color: green;
+            font-family: "Fira Code Retina", sans-serif;
+        }
+
+        #decision {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <div class="text">
+    </div>
+
+</div>
+
+</body>
+
+<script>
+
+    function start() {
+        const sound = new Howl({
+            src: '/static/keyboard.wav',
+            html5: true,
+            volume: 0.3
+        })
+
+        const options = {
+            strings: [
+                ' ',
+                'I quietly walked to the doors and looked through the viewfinder...',
+                'I saw nothing but pure black of turned off corridor lights',
+                'Knocking ended tho, no more sounds...',
+                'It was strange',
+                'Checked doors locks twice then I went back to work'
+            ],
+            typeSpeed: 70,
+            fadeOut: true,
+            cursorChar: '',
+            onComplete: (self) => {
+                setTimeout(_=> sound.stop(), 500);
+            },
+            onStringTyped: (arrayPos, self) => {
+                self.stop()
+                setTimeout(_=> sound.stop(), 500);
+                setTimeout(() => {
+                    if(arrayPos === 5)
+                        return;
+                    self.start();
+                    setTimeout(_=> sound.play(), 500);
+                }, 2000)
+
+            }
+        };
+
+        const typed = new Typed('.text', options)
+        typed.start();
+        setTimeout(_=> sound.play(), 500)
+
+    }
+
+    setTimeout(_=> start(), 1000);
+
+
+</script>
+
+
+</html>

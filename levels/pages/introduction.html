@@ -64,6 +64,7 @@
 
             <div id="startsection">
                 <button class="btn" onclick="start()">START GAME</button>
+                <button class="btn" onclick="window.location.href = '/rules'">RULES</button>
             </div>
 
             <div class="text">
@@ -90,7 +91,7 @@
             })
 
             const bg = new Howl({
-                src: '/static/intro_bg.mp3',
+                src: '/static/bg_outro.mp3',
                 html5: true,
                 volume: 0.5
             })
@@ -98,7 +99,7 @@
             const options = {
                 strings: [
                     ' ',
-                    'May 18th \'17, 3 A.M',
+                    'November 18th \'17, 3 A.M',
                     'United States Of America, Minnesota, Saint Paul',
                     "Dear diary. </br></br>As a hacker I saw myriad times cruelty of our world." +
                     " Situations that </br> push ordinary people to make evil things...</br>" +
@@ -107,42 +108,52 @@
                     "Why i wrote all this?",
                     "Well...",
                     "<span style='color: red'>I need to tell you something</span>.",
-                    "**** **** *** * ****** ******* *** ***** ** *******, ******* **** ******** *** *** **** *****... *** **** *** ** *****.",
-                    "And dont tell them. I am the...",
-                    "<span id='outro' style='color: red'>byteRunner</span>"
+                    "It was like... idk, month ago? I surfed through the 4chan as usually, reading some shitposts and all that stuff...</br> " +
+                    " you know how it works. Then I saw that post... it was written by some guy called <span style='color: red;'>strange_d0ctor</span></br>" +
+                    " And... shit man... I'm not sure if I can handle this once again..",
+                    "After all that stuff I went through... It is hard for me you know.",
+                    "But... I <span style='color: red'>have</span> to do this, world needs to know",
+                    "I know I can trust you my lovely diary, you will never told them that my real name is...",
+                    "<span id='outro' style='color: red'>byteRunner</span>",
+                    "So, from the begging..."
 
                 ],
                 typeSpeed: 70,
                 fadeOut: true,
                 cursorChar: '',
+                onComplete: (self) => {
+                  setTimeout(() => {
+                      location.href = '/welcometruthseeker';
+                  }, 3800);
+                },
                 onStringTyped: (arrayPost, self) => {
                     self.stop()
                     setTimeout(_=> sound.stop(), 500)
                     setTimeout(_=> {
-                        self.start();
+                        if(arrayPost !== 11)
+                            self.start();
+
                         if(arrayPost === 5)
                             setTimeout(_=> bg.play(), 800);
 
-                        if(arrayPost !== 9)
+                        if(arrayPost !== 12 && arrayPost !== 11)
                             setTimeout(_=> sound.play(), 500);
 
-                        if(arrayPost === 9)
+                        if(arrayPost === 11)
                             setTimeout(() => {
                                 $('#outro').animate({ fontSize: "110px" }, 4000)
+                                setTimeout(() => $('.footer').animate({ opacity: "1" }, 1500));
                                 setTimeout(() => {
-                                    $('.footer').animate({ opacity: "1" }, 1500)
-                                })
+                                    $('#outro').remove();
+                                    $('.footer').remove();
+                                    self.start()
+                                    setTimeout(_=> sound.play(), 500);
+                                }, 7000);
+
                             }, 1000);
                     }, 3000);
                 }
             };
-
-            let i = 0;
-            setInterval(() => {
-                i++;
-                console.log(i);
-            }, 1000)
-
 
             const typed = new Typed('.text', options)
             setTimeout(_=> sound.play(), 500)

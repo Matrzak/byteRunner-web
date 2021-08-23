@@ -1,11 +1,13 @@
 const express = require('express');
 const path = require('path');
 const uaparser = require('ua-parser-js');
-const router = express.Router()
+const cookieParser = require('cookie-parser');
+
 
 const APPLICATION_PORT = 2090;
 const application = express();
 
+application.use(cookieParser());
 function browserMiddleware(req, res, next) {
 
     if(req.url.includes('/badbrowser'))
@@ -14,7 +16,7 @@ function browserMiddleware(req, res, next) {
     const parser = new uaparser();
     const ua = req.headers['user-agent'];
     const browserName = parser.setUA(ua).getBrowser().name;
-    const allowedBrowsers = ['Firefox', 'Opera', 'Safari'];
+    const allowedBrowsers = ['Chrome', 'Firefox', 'Opera', 'Safari'];
 
     if(!allowedBrowsers.includes(browserName)){
         res.redirect('/badbrowser')
